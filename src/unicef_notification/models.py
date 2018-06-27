@@ -35,11 +35,12 @@ class Notification(models.Model):
     Represents a notification instance from sender to recipients
     """
 
+    TYPE_EMAIL = "Email"
     TYPE_CHOICES = Choices(
-        ('Email', 'Email'),
+        (TYPE_EMAIL, 'Email'),
     )
 
-    type = models.CharField(
+    method_type = models.CharField(
         verbose_name=_('Type'),
         max_length=255,
         default='Email',
@@ -111,7 +112,7 @@ class Notification(models.Model):
 
     def __str__(self):
         return "{} Notification from {}: {}".format(
-            self.type,
+            self.method_type,
             self.sender,
             self.template_data
         )
@@ -149,11 +150,11 @@ class Notification(models.Model):
         """
         Dispatch notification based on type.
         """
-        if self.type == 'Email':
+        if self.method_type == 'Email':
             self.send_mail()
         else:
             # for future notification methods
-            raise ValueError("Unknown notification type: %s" % self.type)
+            raise ValueError("Unknown notification type: %s" % self.method_type)
 
     def send_mail(self):
         User = get_user_model()

@@ -10,7 +10,6 @@ from unicef_notification import models
 
 # Credit goes to http://stackoverflow.com/a/41154232/2363915
 class JSONFieldFactory(factory.DictFactory):
-
     @classmethod
     def _build(cls, model_class, *args, **kwargs):
         if args:
@@ -42,10 +41,7 @@ class AuthorFactory(factory.django.DjangoModelFactory):
 
 
 class NotificationFactory(factory.django.DjangoModelFactory):
-    class Meta:
-        model = models.Notification
-
-    type = "Email"
+    method_type = models.Notification.TYPE_EMAIL
     sender = factory.SubFactory(AuthorFactory)
     template_name = 'trips/trip/TA_request'
     recipients = ['test@example.com', 'test1@example.com', 'test2@example.com']
@@ -57,3 +53,6 @@ class NotificationFactory(factory.django.DjangoModelFactory):
         },
         dict_factory=JSONFieldFactory
     )
+
+    class Meta:
+        model = models.Notification

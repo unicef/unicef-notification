@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
             name='Notification',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('type', models.CharField(default='Email', max_length=255, validators=[unicef_notification.models.validate_notification_type], verbose_name='Type')),
+                ('method_type', models.CharField(default='Email', max_length=255, validators=[unicef_notification.models.validate_notification_type], verbose_name='Type')),
                 ('object_id', models.PositiveIntegerField(blank=True, null=True, verbose_name='Object ID')),
                 ('from_address', models.CharField(blank=True, max_length=255, null=True)),
                 ('recipients', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=255), blank=True, size=None, verbose_name='Recipients')),
