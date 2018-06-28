@@ -29,8 +29,7 @@ help:
 
 develop: .init-db
 	@${MAKE} clean
-	pipenv install
-	pip install -e .[test]
+	pipenv install -d
 
 
 clean:
