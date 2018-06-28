@@ -11,23 +11,11 @@ from django.db import models
 from django.utils.translation import ugettext as _
 from model_utils import Choices
 from post_office import mail
-from post_office.models import EmailTemplate
 
+from unicef_notification import validations
 from unicef_notification.utils import serialize_dict
 
 logger = logging.getLogger(__name__)
-
-
-def validate_template_name(template_name):
-    try:
-        EmailTemplate.objects.get(name=template_name)
-    except EmailTemplate.DoesNotExist:
-        raise ValidationError("No such EmailTemplate: %s" % template_name)
-
-
-def validate_notification_type(type_name):
-    if type_name not in ('Email'):
-        raise ValidationError("Notification type must be 'Email'")
 
 
 class Notification(models.Model):
@@ -44,7 +32,7 @@ class Notification(models.Model):
         verbose_name=_('Type'),
         max_length=255,
         default='Email',
-        validators=[validate_notification_type],
+        validators=[validations.validate_method_type],
     )
     content_type = models.ForeignKey(
         ContentType,
@@ -83,7 +71,7 @@ class Notification(models.Model):
     template_name = models.CharField(
         verbose_name=_('Template Name'),
         max_length=255,
-        validators=[validate_template_name],
+        validators=[validations.validate_template_name],
         blank=True,
         default='',
     )
