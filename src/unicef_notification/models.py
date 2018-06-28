@@ -31,7 +31,7 @@ class Notification(models.Model):
     method_type = models.CharField(
         verbose_name=_('Type'),
         max_length=255,
-        default='Email',
+        default=TYPE_EMAIL,
         validators=[validations.validate_method_type],
     )
     content_type = models.ForeignKey(
@@ -138,7 +138,7 @@ class Notification(models.Model):
         """
         Dispatch notification based on type.
         """
-        if self.method_type == 'Email':
+        if self.method_type == self.TYPE_EMAIL:
             self.send_mail()
         else:
             # for future notification methods

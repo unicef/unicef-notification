@@ -131,7 +131,7 @@ def send_notification_using_templates(
     )
 
     notification = Notification(
-        type='Email',
+        method_type=Notification.TYPE_EMAIL,
         sender=sender,
         from_address=from_address,
         recipients=recipients,
@@ -192,7 +192,7 @@ def send_notification_using_email_template(
     # Let the model handle parameter validation by creating the instance
     # and 'cleaning' it before saving.
     notification = Notification(
-        type='Email',
+        method_type=Notification.TYPE_EMAIL,
         sender=sender,
         from_address=from_address,
         recipients=recipients,

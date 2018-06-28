@@ -41,3 +41,13 @@ def permission():
 @pytest.fixture
 def author():
     return factories.AuthorFactory()
+
+
+@pytest.fixture
+def notification(email_template):
+    return factories.NotificationFactory(template_name=email_template.name)
+
+
+@pytest.fixture
+def file_html():
+    return "test.html"
