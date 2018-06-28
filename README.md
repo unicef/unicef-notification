@@ -17,10 +17,51 @@ Add ``unicef_notification`` to ``INSTALLED_APPS`` in ``settings.py``
         'unicef_notification',
     ]
 
+Define the notification template to be used;
+
+    UNICEF_NOTIFICATION_TEMPLATE_DIR = 'notifications'
+
+This is the directory where notifcation templates are to be placed in your applications.
 
 ## Usage
 
-TODO
+Create notification template in defined `UNICEF_NOTIFICATION_TEMPLATE_DIR` from setup.
+
+    name = "<unique name for notification">
+    defaults = {
+        "description": "Sample notification",
+        "subject": "Subject of notification",
+        "content": "Content of notification",
+        "html_content": "Notificaton content in HTML format",
+    }
+
+Update the notifications;
+
+    python manage.py update_notifications
+
+Send notification with template;
+
+    from unicef_notification.utils import send_notification_with_template
+
+    context = {}
+    send_notification_with_template(
+        ["to@example.com"],
+        "<name-of-template>",
+        context,
+    )
+
+Send notification without a template;
+
+    from unicef_notification.utils import send_notification
+
+    context = {}
+    send_notification(
+        ["to@example.com"],
+        subject="Subject of notification",
+        content="Content of notification",
+        html_content="Notification content in HTML format",
+    )
+
 
 ## Contributing
 

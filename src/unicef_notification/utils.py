@@ -74,18 +74,18 @@ def get_template_content(content, filename, context={}):
     return ''
 
 
-def send_notification_using_templates(
+def send_notification(
         recipients,
         sender=None,
         from_address='',
         cc=None,
         context=None,
-        subject_template_filename=None,
-        subject_template_content=None,
-        text_template_filename=None,
-        text_template_content=None,
-        html_template_filename=None,
-        html_template_content=None,
+        subject=None,
+        subject_filename=None,
+        content=None,
+        content_filename=None,
+        html_content=None,
+        html_content_filename=None,
 ):
     """
     Send a notification, building the content from templates and
@@ -119,14 +119,11 @@ def send_notification_using_templates(
 
     # Let the model handle parameter validation by creating the instance
     # and 'cleaning' it before saving.
-    text_template = get_template_content(
-        text_template_content,
-        text_template_filename,
-        context
-    )
-    html_template = get_template_content(
-        html_template_content,
-        html_template_filename,
+    subject = get_template_content(subject, subject_filename, context)
+    text_message = get_template_content(content, content_filename, context)
+    html_message = get_template_content(
+        html_content,
+        html_content_filename,
         context
     )
 
@@ -137,20 +134,16 @@ def send_notification_using_templates(
         recipients=recipients,
         cc=cc or [],
         template_data=context,
-        subject=get_template_content(
-            subject_template_content,
-            subject_template_filename,
-            context
-        ),
-        text_message=text_template,
-        html_message=html_template,
+        subject=subject,
+        text_message=text_message,
+        html_message=html_message,
     )
     notification.full_clean()
     notification.save()
     notification.send_notification()
 
 
-def send_notification_using_email_template(
+def send_notification_with_template(
     recipients,
     email_template_name,
     context,

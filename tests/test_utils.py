@@ -74,13 +74,13 @@ def test_get_template_content_neither():
 
 
 @patch('unicef_notification.models.mail')
-def test_send_notification_using_templates(mock_mail, file_html):
+def test_send_notification(mock_mail, file_html):
     mock_mail.send.return_value = Email()
     recipients = ["test@example.com"]
     with patch.object(Notification, 'save'):
-        utils.send_notification_using_templates(
+        utils.send_notification(
             recipients,
-            text_template_filename=file_html
+            content_filename=file_html
         )
     # we called send with all the proper args
     mock_mail.send.assert_called()
@@ -90,15 +90,15 @@ def test_send_notification_using_templates(mock_mail, file_html):
 
 
 @patch('unicef_notification.models.mail')
-def test_send_notification_using_templates_from_address(mock_mail, file_html):
+def test_send_notification_from_address(mock_mail, file_html):
     mock_mail.send.return_value = Email()
     recipients = ["test@example.com"]
     from_address = "from@example.com"
     with patch.object(Notification, 'save'):
-        utils.send_notification_using_templates(
+        utils.send_notification(
             recipients,
             from_address=from_address,
-            text_template_filename=file_html
+            content_filename=file_html
         )
     # we called send with all the proper args
     mock_mail.send.assert_called()
@@ -108,11 +108,11 @@ def test_send_notification_using_templates_from_address(mock_mail, file_html):
 
 
 @patch('unicef_notification.models.mail')
-def test_send_notification_using_email_template(mock_mail, email_template):
+def test_send_notification_with_template(mock_mail, email_template):
     mock_mail.send.return_value = Email()
     recipients = ["test@example.com"]
     with patch.object(Notification, 'save'):
-        utils.send_notification_using_email_template(
+        utils.send_notification_with_template(
             recipients,
             email_template.name,
             {}
@@ -125,12 +125,12 @@ def test_send_notification_using_email_template(mock_mail, email_template):
 
 
 @patch('unicef_notification.models.mail')
-def test_send_notification_using_email_template_from_address(mock_mail, email_template):
+def test_send_notification_with_template_from_address(mock_mail, email_template):
     mock_mail.send.return_value = Email()
     recipients = ["test@example.com"]
     from_address = "from@example.com"
     with patch.object(Notification, 'save'):
-        utils.send_notification_using_email_template(
+        utils.send_notification_with_template(
             recipients,
             email_template.name,
             {},
