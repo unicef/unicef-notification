@@ -17,7 +17,7 @@ Add ``unicef_notification`` to ``INSTALLED_APPS`` in ``settings.py``
         'unicef_notification',
     ]
 
-Define the notification template to be used;
+Define the notification template directory to be used;
 
     UNICEF_NOTIFICATION_TEMPLATE_DIR = 'notifications'
 
@@ -54,7 +54,6 @@ Send notification without a template;
 
     from unicef_notification.utils import send_notification
 
-    context = {}
     send_notification(
         ["to@example.com"],
         subject="Subject of notification",
