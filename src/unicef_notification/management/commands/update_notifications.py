@@ -16,7 +16,7 @@ class Command(BaseCommand):
 
     @transaction.atomic
     def handle(self, *args, **options):
-        logger.info(u'Command started')
+        logger.info('Command started')
 
         # loop through apps
         for app in apps.get_app_configs():
@@ -40,9 +40,10 @@ class Command(BaseCommand):
                         filename.rsplit(".")[0]
                     ))
                     # creating email template objects
+                    logger.info(n.name)
                     EmailTemplate.objects.update_or_create(
                         name=n.name,
                         defaults=n.defaults
                     )
 
-        logger.info(u'Command finished')
+        logger.info('Command finished')
