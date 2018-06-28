@@ -128,3 +128,4 @@ STATIC_URL = '/static/'
 
 
 MEDIA_ROOT = '/tmp/'
+UNICEF_NOTIFICATION_TEMPLATE_DIR = "notifications"

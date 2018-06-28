@@ -4,6 +4,7 @@ import factory
 from demo.sample.models import Author
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
+from post_office.models import EmailTemplate
 
 from unicef_notification import models
 
@@ -43,7 +44,6 @@ class AuthorFactory(factory.django.DjangoModelFactory):
 class NotificationFactory(factory.django.DjangoModelFactory):
     method_type = models.Notification.TYPE_EMAIL
     sender = factory.SubFactory(AuthorFactory)
-    template_name = 'trips/trip/TA_request'
     recipients = ['test@example.com', 'test1@example.com', 'test2@example.com']
     template_data = factory.Dict(
         {
@@ -56,3 +56,10 @@ class NotificationFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = models.Notification
+
+
+class EmailTemplateFactory(factory.django.DjangoModelFactory):
+    name = factory.Faker("name")
+
+    class Meta:
+        model = EmailTemplate

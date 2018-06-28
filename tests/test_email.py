@@ -10,10 +10,10 @@ from unicef_notification.models import Notification
 pytestmark = pytest.mark.django_db
 
 
-def test_email_notification():
+def test_email_notification(email_template):
     email_qs = Email.objects
     old_email_count = email_qs.count()
-    valid_notification = NotificationFactory()
+    valid_notification = NotificationFactory(template_name=email_template.name)
     valid_notification.send_notification()
 
     assert valid_notification.recipients == valid_notification.sent_recipients
