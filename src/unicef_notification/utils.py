@@ -145,7 +145,7 @@ def send_notification(
 
 def send_notification_with_template(
     recipients,
-    email_template_name,
+    template_name,
     context,
     sender=None,
     from_address='',
@@ -172,7 +172,7 @@ def send_notification_with_template(
 
     * context: dictionary used to render the templates, or None.
 
-    * email_template_name: name of email template to use (there must be a EmailTemplate
+    * template_name: name of email template to use (there must be a EmailTemplate
       record with that name)
     """
     from unicef_notification.models import Notification
@@ -180,7 +180,7 @@ def send_notification_with_template(
     if not (sender or from_address):
         from_address = settings.DEFAULT_FROM_EMAIL
 
-    assert email_template_name
+    assert template_name
 
     # Let the model handle parameter validation by creating the instance
     # and 'cleaning' it before saving.
@@ -190,7 +190,7 @@ def send_notification_with_template(
         from_address=from_address,
         recipients=recipients,
         cc=cc or [],
-        template_name=email_template_name,
+        template_name=template_name,
         template_data=context,
     )
     notification.full_clean()
