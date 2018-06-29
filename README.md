@@ -14,10 +14,20 @@ Add ``unicef_notification`` to ``INSTALLED_APPS`` in settings
 
     INSTALLED_APPS = [
         ...
+        'post_office',
         'unicef_notification',
     ]
 
-Upadte ``TEMPLATES`` in settings by adding ``EmailTemplateLoader`` and marking ``APP_DIRS`` as ``False``
+Add ``POST_OFFICE`` configuration to settings;
+
+    POST_OFFICE = {
+        'DEFAULT_PRIORITY': 'now',
+        'BACKENDS': {
+            'default': 'djcelery_email.backends.CeleryEmailBackend'
+        }
+    }
+
+Update ``TEMPLATES`` in settings by adding ``EmailTemplateLoader`` and marking ``APP_DIRS`` as ``False``
 
     TEMPLATES = [
         ...
