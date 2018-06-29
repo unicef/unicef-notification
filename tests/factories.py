@@ -4,7 +4,6 @@ import factory
 from demo.sample.models import Author
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
-from post_office.models import EmailTemplate
 
 from unicef_notification import models
 
@@ -62,4 +61,4 @@ class EmailTemplateFactory(factory.django.DjangoModelFactory):
     name = factory.Faker("name")
 
     class Meta:
-        model = EmailTemplate
+        model = models.EmailTemplate

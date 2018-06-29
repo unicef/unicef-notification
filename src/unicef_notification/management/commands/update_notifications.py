@@ -10,6 +10,12 @@ from post_office.models import EmailTemplate
 
 logger = logging.getLogger(__name__)
 
+NOTIFICATION_TEMPLATE_DIR = getattr(
+    settings,
+    "UNICEF_NOTIFICATION_TEMPLATE_DIR",
+    "notifications"
+)
+
 
 class Command(BaseCommand):
     help = 'Create Notifications command'
@@ -23,7 +29,7 @@ class Command(BaseCommand):
             # check if notification template dir exists
             notification_dir = "{}/{}".format(
                 app.path,
-                settings.UNICEF_NOTIFICATION_TEMPLATE_DIR
+                NOTIFICATION_TEMPLATE_DIR
             )
             if os.path.isdir(notification_dir):
                 # walk through notification templates
@@ -36,7 +42,7 @@ class Command(BaseCommand):
                         continue
                     n = import_module("{}.{}.{}".format(
                         app.name,
-                        settings.UNICEF_NOTIFICATION_TEMPLATE_DIR,
+                        NOTIFICATION_TEMPLATE_DIR,
                         filename.rsplit(".")[0]
                     ))
                     # creating email template objects

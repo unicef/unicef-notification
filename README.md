@@ -10,18 +10,40 @@ Notification is a library that provides handles sending of notifications.
 
 ## Setup
 
-Add ``unicef_notification`` to ``INSTALLED_APPS`` in ``settings.py``
+Add ``unicef_notification`` to ``INSTALLED_APPS`` in settings
 
     INSTALLED_APPS = [
         ...
         'unicef_notification',
     ]
 
-Define the notification template directory to be used;
+Upadte ``TEMPLATES`` in settings by adding ``EmailTemplateLoader`` and marking ``APP_DIRS`` as ``False``
+
+    TEMPLATES = [
+        ...
+        'APP_DIRS': False,  # False because we set loaders manually below
+        'OPTIONS': {
+            'loaders': [
+                ...
+                'django.template.loaders.app_directories.Loader',
+                'unicef_notification.loaders.EmailTemplateLoader',
+            ],
+            ...
+        ]
+
+
+### Optional
+
+If you want to override the notification template directory to be used;
 
     UNICEF_NOTIFICATION_TEMPLATE_DIR = 'notifications'
 
 This is the directory where notifcation templates are to be placed in your applications.
+These are loaded with the `upload_notifications` management command.
+
+If you want to override the email template prefix;
+
+    UNICEF_NOTIFICATION_EMAIL_TEMPLATE_PREFIX = 'email-templates/'
 
 ## Usage
 

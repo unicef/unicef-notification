@@ -60,8 +60,12 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
-        'APP_DIRS': True,
+        'APP_DIRS': False,  # False because we set loaders manually below
         'OPTIONS': {
+            'loaders': [
+                'django.template.loaders.app_directories.Loader',
+                'unicef_notification.loaders.EmailTemplateLoader',
+            ],
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -126,6 +130,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
 MEDIA_ROOT = '/tmp/'
-UNICEF_NOTIFICATION_TEMPLATE_DIR = "notifications"

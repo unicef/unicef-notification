@@ -11,6 +11,7 @@ from django.db import models
 from django.utils.translation import ugettext as _
 from model_utils import Choices
 from post_office import mail
+from post_office.models import EmailTemplate  # noqa used as a wrapper
 
 from unicef_notification import validations
 from unicef_notification.utils import serialize_dict
