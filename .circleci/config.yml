@@ -39,7 +39,7 @@ jobs:
     docker:
       - image: circleci/python:3.6
         environment:
-          API_URL: https://api.github.com/repos/unicef/etools-validator
+          API_URL: https://api.github.com/repos/unicef/unicef-notification
     steps:
       - checkout
       - add_ssh_keys:
