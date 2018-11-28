@@ -108,6 +108,21 @@ def test_send_notification_from_address(mock_mail, file_html):
 
 
 @patch('unicef_notification.models.mail')
+def test_send_notification_recipients_str(mock_mail, file_html):
+    mock_mail.send.return_value = Email()
+    recipients = "test@example.com"
+    with patch.object(Notification, 'save'):
+        utils.send_notification(
+            recipients,
+            content_filename=file_html
+        )
+    # we called send with all the proper args
+    mock_mail.send.assert_called()
+    call_kwargs = mock_mail.send.call_args[1]
+    assert [recipients] == call_kwargs["recipients"]
+
+
+@patch('unicef_notification.models.mail')
 def test_send_notification_with_template(mock_mail, email_template):
     mock_mail.send.return_value = Email()
     recipients = ["test@example.com"]
@@ -141,3 +156,19 @@ def test_send_notification_with_template_from_address(mock_mail, email_template)
     call_kwargs = mock_mail.send.call_args[1]
     assert from_address == call_kwargs['sender']
     assert recipients == call_kwargs["recipients"]
+
+
+@patch('unicef_notification.models.mail')
+def test_send_notification_with_template_recipients_str(mock_mail, email_template):
+    mock_mail.send.return_value = Email()
+    recipients = "test@example.com"
+    with patch.object(Notification, 'save'):
+        utils.send_notification_with_template(
+            recipients,
+            email_template.name,
+            {},
+        )
+    # we called send with all the proper args
+    mock_mail.send.assert_called()
+    call_kwargs = mock_mail.send.call_args[1]
+    assert [recipients] == call_kwargs["recipients"]
