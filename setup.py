@@ -100,7 +100,7 @@ setup(
     ],
     scripts=[],
     cmdclass={
-        "install": UNICEFNotificationInstall,
+        "sdist": SDistCommand,
         "verify": VerifyTagVersion,
     }
 )
