@@ -4,3 +4,4 @@ django
 jsonfield
 psycopg2-binary
 pytz
+sqlparse
