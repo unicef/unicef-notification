@@ -6,9 +6,8 @@ import os.path
 import re
 import sys
 from codecs import open
-from setuptools import setup, find_packages
-from setuptools.command.install import install
-from distutils import log
+
+from setuptools import find_packages, setup
 
 ROOT = os.path.realpath(os.path.dirname(__file__))
 init = os.path.join(ROOT, 'src', 'unicef_notification', '__init__.py')
@@ -23,57 +22,46 @@ with open(init, 'rb') as f:
     NAME = str(ast.literal_eval(_name_re.search(content).group(1)))
 
 
-def read(*files):
-    content = []
-    for f in files:
-        content.extend(codecs.open(os.path.join(ROOT, 'src', 'requirements', f), 'r').readlines())
-    return "\n".join(filter(lambda l:not l.startswith('-'), content))
-
-
-class UNICEFNotificationInstall(install):
-    def run(self):
-        ret = super().run()
-        log.info("This product needs pipenv for a proper installation")
-        return ret
-
-
-class VerifyTagVersion(install):
-    """Verify that the git tag matches version"""
-
-    def run(self):
-        tag = os.getenv("CIRCLE_TAG")
-        if tag != VERSION:
-            info = "Git tag: {} does not match the version of this app: {}".format(
-                tag,
-                VERSION
-            )
-            sys.exit(info)
-
-
-setup(name=NAME,
-      version=VERSION,
-      url='https://github.com/unicef/unicef-notification',
-      author='UNICEF',
-      author_email='dev@unicef.org',
-      license="Apache 2 License",
-      description='Django package that handles sending of notifications',
-      long_description=codecs.open('README.md').read(),
-      package_dir={'': 'src'},
-      packages=find_packages(where='src'),
-      include_package_data=True,
-      install_requires=read('install.pip'),
-      extras_require={
-          'test': read('install.pip', 'testing.pip'),
-      },
-      platforms=['any'],
-      classifiers=[
-          'Environment :: Web Environment',
-          'Programming Language :: Python :: 3.6',
-          'Framework :: Django',
-          'Intended Audience :: Developers'],
-      scripts=[],
-      cmdclass={
-          "install": UNICEFNotificationInstall,
-          "verify": VerifyTagVersion,
-      }
+setup(
+    name=NAME,
+    version=VERSION,
+    url='https://github.com/unicef/unicef-notification',
+    author='UNICEF',
+    author_email='dev@unicef.org',
+    license="Apache 2 License",
+    description='Django package that handles sending of notifications',
+    long_description=codecs.open('README.md').read(),
+    package_dir={'': 'src'},
+    packages=find_packages(where='src'),
+    include_package_data=True,
+    install_requires=(
+        'django',
+        'django-model-utils',
+        'django-post-office',
+    ),
+    extras_require={
+        'test': (
+            'flake8',
+            'isort',
+            'pytest',
+            'pytest-cov',
+            'pytest-django',
+            'pytest-echo',
+            'pytest-pythonpath',
+            'factory-boy',
+            'psycopg2-binary'
+        )
+    },
+    platforms=['any'],
+    classifiers=[
+        'Environment :: Web Environment',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Framework :: Django',
+        'Framework :: Django :: 2.1',
+        'Framework :: Django :: 2.2',
+        'Intended Audience :: Developers',
+    ],
+    scripts=[],
 )

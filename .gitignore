@@ -7,3 +7,6 @@ dist/
 coverage.xml
 .pytest_cache/
 .tox/
+Pipfile
+Pipfile.lock
+.idea/
