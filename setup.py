@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 import ast
 import codecs
 import os.path
@@ -56,8 +55,8 @@ setup(
     classifiers=[
         'Environment :: Web Environment',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
         'Framework :: Django',
         'Framework :: Django :: 2.1',
         'Framework :: Django :: 2.2',
