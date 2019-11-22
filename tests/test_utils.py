@@ -1,10 +1,11 @@
 import json
-from unittest.mock import patch
 
-import pytest
 from django.conf import settings
 from django.core.serializers.json import DjangoJSONEncoder
 from post_office.models import Email
+
+import pytest
+from unittest.mock import patch
 
 from unicef_notification import utils
 from unicef_notification.models import Notification

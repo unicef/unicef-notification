@@ -1,5 +1,6 @@
-import pytest
 from django.core.exceptions import ValidationError
+
+import pytest
 
 from unicef_notification import validations
 from unicef_notification.models import Notification

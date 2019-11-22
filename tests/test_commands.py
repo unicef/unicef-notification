@@ -1,6 +1,7 @@
-import pytest
 from django.core.management import call_command
 from post_office.models import EmailTemplate
+
+import pytest
 
 pytestmark = pytest.mark.django_db
 

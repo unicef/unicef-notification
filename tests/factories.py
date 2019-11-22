@@ -1,11 +1,13 @@
 import json
 
-import factory
-from demo.sample.models import Author
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 
+import factory
+
 from unicef_notification import models
+
+from demo.sample.models import Author
 
 
 # Credit goes to http://stackoverflow.com/a/41154232/2363915
