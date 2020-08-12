@@ -1,8 +1,8 @@
-from unittest.mock import Mock
-
-import pytest
 from django.template import TemplateDoesNotExist
 from post_office.models import Email
+
+import pytest
+from unittest.mock import Mock
 
 from unicef_notification import loaders
 from unicef_notification.utils import send_notification_with_template

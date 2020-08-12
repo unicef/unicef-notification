@@ -1,6 +1,8 @@
-import pytest
 from django.contrib.admin.sites import AdminSite
 from django.contrib.auth.models import Permission
+
+import pytest
+
 from tests import factories
 
 
