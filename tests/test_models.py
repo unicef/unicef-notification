@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.core.exceptions import ValidationError
+
 from post_office.models import Email
 
 import pytest

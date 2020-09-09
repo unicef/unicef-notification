@@ -1,4 +1,5 @@
 from django.template import TemplateDoesNotExist
+
 from post_office.models import Email
 
 import pytest

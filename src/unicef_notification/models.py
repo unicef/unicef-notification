@@ -5,16 +5,22 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.postgres.fields import ArrayField, JSONField
+from django.contrib.postgres.fields import ArrayField
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext as _
+
 from model_utils import Choices
 from post_office import mail
 from post_office.models import EmailTemplate  # noqa used as a wrapper
 
 from unicef_notification import validations
 from unicef_notification.utils import serialize_dict
+
+try:
+    from django.db.models import JSONField
+except ImportError:
+    from django.contrib.postgres.fields import JSONField
 
 logger = logging.getLogger(__name__)
 
