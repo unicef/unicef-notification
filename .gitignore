@@ -10,3 +10,5 @@ coverage.xml
 Pipfile
 Pipfile.lock
 .idea/
+.env
+.envrc
