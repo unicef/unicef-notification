@@ -8,7 +8,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.postgres.fields import ArrayField, JSONField
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from model_utils import Choices
 from post_office import mail
 from post_office.models import EmailTemplate  # noqa used as a wrapper
