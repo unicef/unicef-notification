@@ -2,6 +2,7 @@ import json
 
 from django.conf import settings
 from django.core.serializers.json import DjangoJSONEncoder
+
 from post_office.models import Email
 
 import pytest

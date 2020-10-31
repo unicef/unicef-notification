@@ -6,6 +6,7 @@ from django.apps import apps
 from django.conf import settings
 from django.core.management import BaseCommand
 from django.db import transaction
+
 from post_office.models import EmailTemplate
 
 logger = logging.getLogger(__name__)
