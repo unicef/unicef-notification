@@ -123,8 +123,7 @@ class Notification(models.Model):
     def clean(self):
         if (self.text_message or self.html_message or self.subject) and self.template_name:
             raise ValidationError(
-                "Notification cannot have both a template name, "
-                "and a text_message or html_message or subject"
+                "Notification cannot have both a template name, and a text_message or html_message or subject"
             )
         if not (self.text_message or self.html_message or self.template_name or self.subject):
             raise ValidationError(
