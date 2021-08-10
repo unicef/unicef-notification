@@ -17,10 +17,6 @@ from post_office.models import EmailTemplate  # noqa used as a wrapper
 from unicef_notification import validations
 from unicef_notification.utils import serialize_dict
 
-try:
-    from django.db.models import JSONField
-except ImportError:
-    from django.contrib.postgres.fields import JSONField
 
 logger = logging.getLogger(__name__)
 
@@ -83,7 +79,7 @@ class Notification(models.Model):
         default='',
     )
     # template_data is the context for rendering any templates.
-    template_data = JSONField(
+    template_data = models.JSONField(
         verbose_name=_('Template Data'),
         null=True,
         blank=True,
