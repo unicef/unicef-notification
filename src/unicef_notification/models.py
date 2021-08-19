@@ -17,7 +17,6 @@ from post_office.models import EmailTemplate  # noqa used as a wrapper
 from unicef_notification import validations
 from unicef_notification.utils import serialize_dict
 
-
 logger = logging.getLogger(__name__)
 
 
