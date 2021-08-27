@@ -1,0 +1,25 @@
+dist: xenial
+language: python
+sudo: false
+
+python:
+  - 3.9
+
+env:
+  - DJANGO=3.2
+
+services:
+  - postgresql
+
+install:
+  - pip install tox codecov
+
+script:
+  - tox -e "py${TRAVIS_PYTHON_VERSION//.}-d${DJANGO//.}"
+
+before_success:
+  - coverage erase
+
+after_success:
+  - coverage combine
+  - codecov

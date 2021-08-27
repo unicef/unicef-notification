@@ -5,10 +5,11 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.postgres.fields import ArrayField, JSONField
+from django.contrib.postgres.fields import ArrayField
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
+
 from model_utils import Choices
 from post_office import mail
 from post_office.models import EmailTemplate  # noqa used as a wrapper
@@ -77,7 +78,7 @@ class Notification(models.Model):
         default='',
     )
     # template_data is the context for rendering any templates.
-    template_data = JSONField(
+    template_data = models.JSONField(
         verbose_name=_('Template Data'),
         null=True,
         blank=True,

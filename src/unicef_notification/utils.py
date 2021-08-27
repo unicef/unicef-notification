@@ -127,6 +127,9 @@ def send_notification(
         context
     )
 
+    if isinstance(recipients, str):
+        recipients = [recipients]
+
     notification = Notification(
         method_type=Notification.TYPE_EMAIL,
         sender=sender,
@@ -179,6 +182,9 @@ def send_notification_with_template(
 
     if not (sender or from_address):
         from_address = settings.DEFAULT_FROM_EMAIL
+
+    if isinstance(recipients, str):
+        recipients = [recipients]
 
     assert template_name
 

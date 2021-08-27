@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.template import Origin, TemplateDoesNotExist
 from django.template.loaders.base import Loader as BaseLoader
+
 from post_office.utils import get_email_template
 
 from unicef_notification.models import EmailTemplate

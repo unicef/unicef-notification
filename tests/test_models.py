@@ -1,14 +1,16 @@
-from unittest.mock import patch
-
-import pytest
-from demo.sample.models import Author
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from post_office.models import Email
-from tests.factories import AuthorFactory, NotificationFactory, UserFactory
 
+from post_office.models import Email
+
+import pytest
+from unittest.mock import patch
+
+from tests.factories import AuthorFactory, NotificationFactory, UserFactory
 from unicef_notification.models import Notification
 from unicef_notification.utils import serialize_dict
+
+from demo.sample.models import Author
 
 pytestmark = pytest.mark.django_db
 
