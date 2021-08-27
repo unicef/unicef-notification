@@ -1,16 +1,20 @@
-# UNICEF Notification
+UNICEF Notification
+===================
+
 
 Notification is a library that provides handles sending of notifications.
 
 
-## Installation
+Installation
+------------
 
     pip install unicef-notification
 
 
-## Setup
+Setup
+-----
 
-Add ``unicef_notification`` to ``INSTALLED_APPS`` in settings
+Add unicef_notification to INSTALLED_APPS in settings::
 
     INSTALLED_APPS = [
         ...
@@ -18,46 +22,47 @@ Add ``unicef_notification`` to ``INSTALLED_APPS`` in settings
         'unicef_notification',
     ]
 
-Add ``POST_OFFICE`` configuration to settings;
+Add POST_OFFICE configuration to settings::
 
     POST_OFFICE = {
         'DEFAULT_PRIORITY': 'now',
         'BACKENDS': {
             'default': 'djcelery_email.backends.CeleryEmailBackend'
-        }
+            }
     }
 
-Update ``TEMPLATES`` in settings by adding ``EmailTemplateLoader`` and marking ``APP_DIRS`` as ``False``
+Update TEMPLATES in settings by adding EmailTemplateLoader and marking APP_DIRS as False::
 
     TEMPLATES = [
         ...
         'APP_DIRS': False,  # False because we set loaders manually below
         'OPTIONS': {
-            'loaders': [
-                ...
-                'django.template.loaders.app_directories.Loader',
-                'unicef_notification.loaders.EmailTemplateLoader',
-            ],
-            ...
+        'loaders': [
+            'django.template.loaders.app_directories.Loader',
+            'unicef_notification.loaders.EmailTemplateLoader',
+        ],
+        ...
         ]
 
 
-### Optional
+Optional
+--------
 
-If you want to override the notification template directory to be used;
+If you want to override the notification template directory to be used::
 
     UNICEF_NOTIFICATION_TEMPLATE_DIR = 'notifications'
 
 This is the directory where notifcation templates are to be placed in your applications.
 These are loaded with the `upload_notifications` management command.
 
-If you want to override the email template prefix;
+If you want to override the email template prefix::
 
     UNICEF_NOTIFICATION_EMAIL_TEMPLATE_PREFIX = 'email-templates/'
 
-## Usage
+Usage
+-----
 
-Create notification template in defined `UNICEF_NOTIFICATION_TEMPLATE_DIR` from setup.
+Create notification template in defined `UNICEF_NOTIFICATION_TEMPLATE_DIR` from setup::
 
     name = "<unique name for notification">
     defaults = {
@@ -67,11 +72,11 @@ Create notification template in defined `UNICEF_NOTIFICATION_TEMPLATE_DIR` from 
         "html_content": "Notificaton content in HTML format",
     }
 
-Update the notifications;
+Update the notifications::
 
     python manage.py update_notifications
 
-Send notification with template;
+Send notification with template::
 
     from unicef_notification.utils import send_notification_with_template
 
@@ -82,7 +87,7 @@ Send notification with template;
         context,
     )
 
-Send notification without a template;
+Send notification without a template::
 
     from unicef_notification.utils import send_notification
 
@@ -94,34 +99,39 @@ Send notification without a template;
     )
 
 
-## Contributing
+Contributing
+============
 
-### Environment Setup
+Environment Setup
+-----------------
 
-To install the necessary libraries
+To install the necessary libraries::
 
     $ make install
 
 
-### Coding Standards
+Coding Standards
+----------------
 
 See `PEP 8 Style Guide for Python Code <https://www.python.org/dev/peps/pep-0008/>`_ for complete details on the coding standards.
 
-To run checks on the code to ensure code is in compliance
+To run checks on the code to ensure code is in compliance::
 
     $ make lint
 
 
-### Testing
+Testing
+-------
 
-Testing is important and tests are located in `tests/` directory and can be run with;
+Testing is important and tests are located in `tests/` directory and can be run with::
 
     $ make test
 
-Coverage report is viewable in `build/coverage` directory, and can be generated with;
+Coverage report is viewable in `build/coverage` directory, and can be generated with
 
 
-### Project Links
+Project Links
+-------------
 
  - Continuos Integration - https://circleci.com/gh/unicef/unicef-notification/tree/develop
  - Source Code - https://github.com/unicef/unicef-notification
