@@ -153,6 +153,7 @@ def send_notification_with_template(
     sender=None,
     from_address='',
     cc=None,
+    send_disabled=False
 ):
     """
     Send an email notification using an EmailTemplate object as the source of
@@ -201,4 +202,5 @@ def send_notification_with_template(
     )
     notification.full_clean()
     notification.save()
-    notification.send_notification()
+    if not send_disabled:
+        notification.send_notification()
