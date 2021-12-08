@@ -1,8 +1,8 @@
-from django.conf.urls import url
 from django.contrib import admin
+from django.urls import re_path
 
 urlpatterns = [
-    # url(r'^sample/', include('demo.sample.urls')),
-    # url(r'^notification/', include('unicef_notification.urls')),
-    url(r'^admin/', admin.site.urls),
+    # re_path(r'^sample/', include('demo.sample.urls')),
+    # re_path(r'^notification/', include('unicef_notification.urls')),
+    re_path(r'^admin/', admin.site.urls),
 ]
