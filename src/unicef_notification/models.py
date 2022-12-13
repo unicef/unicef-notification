@@ -108,16 +108,15 @@ class Notification(models.Model):
         )
 
     def __init__(self, *args, **kwargs):
-        template_data = kwargs.pop('template_data', {})
+        template_data = kwargs.get('template_data', {})
         # Before trying to serialize template_data, we might need to
         # make it serializable
         try:
             json.dumps(template_data)
         except TypeError:
             assert isinstance(template_data, dict)
-            template_data = serialize_dict(template_data)
-        kwargs['template_data'] = template_data
-        super(Notification, self).__init__(*args, **kwargs)
+            kwargs['template_data'] = serialize_dict(template_data)
+        super().__init__(*args, **kwargs)
 
     def clean(self):
         if (self.text_message or self.html_message or self.subject) and self.template_name:
