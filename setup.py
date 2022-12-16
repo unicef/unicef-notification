@@ -29,7 +29,7 @@ setup(
     author_email='dev@unicef.org',
     license="Apache 2 License",
     description='Django package that handles sending of notifications',
-    long_description=codecs.open('README.md').read(),
+    long_description=codecs.open('README.rst').read(),
     package_dir={'': 'src'},
     packages=find_packages(where='src'),
     include_package_data=True,
@@ -46,7 +46,6 @@ setup(
             'pytest-cov',
             'pytest-django',
             'pytest-echo',
-            'pytest-pythonpath',
             'factory-boy',
             'psycopg2-binary'
         )
@@ -55,14 +54,11 @@ setup(
     classifiers=[
         'Environment :: Web Environment',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Framework :: Django',
-        'Framework :: Django :: 2.2',
-        'Framework :: Django :: 3.0',
-        'Framework :: Django :: 3.1',
         'Framework :: Django :: 3.2',
+        'Framework :: Django :: 4.0',
+        'Framework :: Django :: 4.1',
         'Intended Audience :: Developers',
     ],
     scripts=[],
