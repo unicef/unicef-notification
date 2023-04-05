@@ -7,9 +7,7 @@ from post_office.utils import get_email_template
 from unicef_notification.models import EmailTemplate
 
 EMAIL_TEMPLATE_PREFIX = getattr(
-    settings,
-    "UNICEF_NOTIFICATION_EMAIL_TEMPLATE_PREFIX",
-    'email-templates/'
+    settings, "UNICEF_NOTIFICATION_EMAIL_TEMPLATE_PREFIX", "email-templates/"
 )
 
 
@@ -19,7 +17,7 @@ class EmailTemplateLoader(BaseLoader):
             return
 
         yield Origin(
-            name=template_name[len(EMAIL_TEMPLATE_PREFIX):],
+            name=template_name[len(EMAIL_TEMPLATE_PREFIX) :],
             template_name=template_name,
             loader=self,
         )

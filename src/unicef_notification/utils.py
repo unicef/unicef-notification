@@ -28,7 +28,7 @@ def model_to_dictionary(obj):
 
     # Note that Django's serializers only work on iterables of model instances
 
-    json_string = serializers.serialize('json', [obj])
+    json_string = serializers.serialize("json", [obj])
     # The string will deserialize to a list with one simple dictionary, like
     # {
     #     'pk': 15,
@@ -41,7 +41,7 @@ def model_to_dictionary(obj):
     # }
     d = json.loads(json_string)[0]
     # Promote the fields into the main dictionary
-    d.update(**d.pop('fields'))
+    d.update(**d.pop("fields"))
     return d
 
 
@@ -59,7 +59,7 @@ def serialize_dict(data):
 
 
 def strip_text(text):
-    return '\r\n'.join([line.lstrip() for line in text.splitlines()])
+    return "\r\n".join([line.lstrip() for line in text.splitlines()])
 
 
 def get_template_content(content, filename, context={}):
@@ -71,21 +71,21 @@ def get_template_content(content, filename, context={}):
         ctx = Context(context)
         template = get_template(filename)
         return template.template.render(ctx)
-    return ''
+    return ""
 
 
 def send_notification(
-        recipients,
-        sender=None,
-        from_address='',
-        cc=None,
-        context=None,
-        subject=None,
-        subject_filename=None,
-        content=None,
-        content_filename=None,
-        html_content=None,
-        html_content_filename=None,
+    recipients,
+    sender=None,
+    from_address="",
+    cc=None,
+    context=None,
+    subject=None,
+    subject_filename=None,
+    content=None,
+    content_filename=None,
+    html_content=None,
+    html_content_filename=None,
 ):
     """
     Send a notification, building the content from templates and
@@ -121,11 +121,7 @@ def send_notification(
     # and 'cleaning' it before saving.
     subject = get_template_content(subject, subject_filename, context)
     text_message = get_template_content(content, content_filename, context)
-    html_message = get_template_content(
-        html_content,
-        html_content_filename,
-        context
-    )
+    html_message = get_template_content(html_content, html_content_filename, context)
 
     if isinstance(recipients, str):
         recipients = [recipients]
@@ -151,9 +147,9 @@ def send_notification_with_template(
     template_name,
     context,
     sender=None,
-    from_address='',
+    from_address="",
     cc=None,
-    send_disabled=False
+    send_disabled=False,
 ):
     """
     Send an email notification using an EmailTemplate object as the source of

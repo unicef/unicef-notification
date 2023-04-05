@@ -27,35 +27,33 @@ class Notification(models.Model):
 
     TYPE_EMAIL = "Email"
     TYPE_CHOICES = Choices(
-        (TYPE_EMAIL, 'Email'),
+        (TYPE_EMAIL, "Email"),
     )
 
     method_type = models.CharField(
-        verbose_name=_('Type'),
+        verbose_name=_("Type"),
         max_length=255,
         default=TYPE_EMAIL,
         validators=[validations.validate_method_type],
     )
     content_type = models.ForeignKey(
         ContentType,
-        verbose_name=_('Content Type'),
+        verbose_name=_("Content Type"),
         null=True,
         blank=True,
         on_delete=models.CASCADE,
     )
     object_id = models.PositiveIntegerField(
-        verbose_name=_('Object ID'),
+        verbose_name=_("Object ID"),
         null=True,
         blank=True,
     )
-    sender = GenericForeignKey('content_type', 'object_id')
+    sender = GenericForeignKey("content_type", "object_id")
     # from_address can be used as the notification from address if sender is
     # not a user with an email address.
     from_address = models.CharField(max_length=255, null=True, blank=True)
     recipients = ArrayField(
-        models.CharField(max_length=255),
-        blank=True,
-        verbose_name=_('Recipients')
+        models.CharField(max_length=255), blank=True, verbose_name=_("Recipients")
     )
     cc = ArrayField(
         models.CharField(max_length=255),
@@ -66,65 +64,67 @@ class Notification(models.Model):
         models.CharField(max_length=255),
         default=list,
         blank=True,
-        verbose_name=_('Sent Recipients')
+        verbose_name=_("Sent Recipients"),
     )
     # template_name has to be the name of an existing EmailTemplate object.
     # validate_template_name checks that.
     template_name = models.CharField(
-        verbose_name=_('Template Name'),
+        verbose_name=_("Template Name"),
         max_length=255,
         validators=[validations.validate_template_name],
         blank=True,
-        default='',
+        default="",
     )
     # template_data is the context for rendering any templates.
     template_data = models.JSONField(
-        verbose_name=_('Template Data'),
+        verbose_name=_("Template Data"),
         null=True,
         blank=True,
     )
     # Save a link to the actual post_office.Email object that was sent
     sent_email = models.ForeignKey(
-        'post_office.Email',
+        "post_office.Email",
         null=True,
         blank=True,
         on_delete=models.CASCADE,
     )
     # Content of template used to render subject
     # if template_name not specified.
-    subject = models.TextField(default='', blank=True)
+    subject = models.TextField(default="", blank=True)
     # Content of template used to render plain text message
     # if template_name not specified.
-    text_message = models.TextField(default='', blank=True)
+    text_message = models.TextField(default="", blank=True)
     # Content of template used to render HTML message
     # if template_name not specified.
-    html_message = models.TextField(default='', blank=True)
+    html_message = models.TextField(default="", blank=True)
 
     def __str__(self):
         return "{} Notification from {}: {}".format(
-            self.method_type,
-            self.sender,
-            self.template_data
+            self.method_type, self.sender, self.template_data
         )
 
     def __init__(self, *args, **kwargs):
-        template_data = kwargs.get('template_data', {})
+        template_data = kwargs.get("template_data", {})
         # Before trying to serialize template_data, we might need to
         # make it serializable
         try:
             json.dumps(template_data)
         except TypeError:
             assert isinstance(template_data, dict)
-            kwargs['template_data'] = serialize_dict(template_data)
+            kwargs["template_data"] = serialize_dict(template_data)
         super().__init__(*args, **kwargs)
 
     def clean(self):
-        if (self.text_message or self.html_message or self.subject) and self.template_name:
+        if (
+            self.text_message or self.html_message or self.subject
+        ) and self.template_name:
             raise ValidationError(
                 "Notification cannot have both a template name, "
                 "and a text_message or html_message or subject"
             )
-        if not (self.text_message or self.html_message or self.template_name or self.subject):
+        if not (
+            self.text_message or self.html_message or self.template_name or self.subject
+        ):
             raise ValidationError(
                 "Notification must have template name or text_message or html_message or subject."
             )
@@ -173,7 +173,7 @@ class Notification(models.Model):
             )
         except Exception:
             # log an exception, with traceback
-            logger.exception('Failed to send mail.')
+            logger.exception("Failed to send mail.")
         else:
             self.sent_recipients = self.recipients + self.cc
             self.sent_email = email

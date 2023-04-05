@@ -10,7 +10,7 @@ from tests import factories
 def base_email_template():
     return factories.EmailTemplateFactory(
         name="test_base",
-        html_content='''
+        html_content="""
         <html>
             <head></head>
             <body>
@@ -18,21 +18,21 @@ def base_email_template():
                 {% block content %}{% endblock %}
             </body>
         </html>
-        '''
+        """,
     )
 
 
 @pytest.fixture()
 def email_template(base_email_template):
     return factories.EmailTemplateFactory(
-        name='template1',
-        html_content='''
+        name="template1",
+        html_content="""
         {% extends "email-templates/test_base" %}
 
         {% block content %}
             <p>Template1</p>
         {% endblock %}
-        '''
+        """,
     )
 
 
