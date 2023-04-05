@@ -9,7 +9,7 @@ jobs:
   build:
     docker:
       - image: cimg/python:3.11
-      - image: cimg/14.7-postgis
+      - image: cimg/postgres:14.7
         environment:
           POSTGRES_USER: postgres
           PGUSER: postgres
@@ -38,9 +38,10 @@ jobs:
           destination: python_app
   release:
     docker:
-      - image: cimg/python:3.11
+      - image: circleci/python:3.9
     steps:
       - checkout
+      - run: sudo apt-get install libgdal-dev libgeos-dev libproj-dev libudunits2-dev libv8-dev
       - restore_cache:
           key: deps1-{{ .Branch }}-{{ checksum "setup.py" }}
       - save_cache:

@@ -17,7 +17,7 @@ class EmailTemplateLoader(BaseLoader):
             return
 
         yield Origin(
-            name=template_name[len(EMAIL_TEMPLATE_PREFIX) :],
+            name=template_name[len(EMAIL_TEMPLATE_PREFIX):],
             template_name=template_name,
             loader=self,
         )
