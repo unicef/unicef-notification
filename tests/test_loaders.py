@@ -15,24 +15,21 @@ def test_extends(email_template):
     mail_qs = Email.objects
     assert mail_qs.count() == 0
     send_notification_with_template(
-        recipients=['test@example.com'],
-        from_address='no-reply@test.com',
-        template_name='template1',
+        recipients=["test@example.com"],
+        from_address="no-reply@test.com",
+        template_name="template1",
         context={},
     )
 
     assert mail_qs.count() == 1
     mail = mail_qs.first()
-    assert 'Base template' in mail.html_message
-    assert 'Template1' in mail.html_message
+    assert "Base template" in mail.html_message
+    assert "Template1" in mail.html_message
 
 
 def test_get_template_sources(email_template):
     loader = loaders.EmailTemplateLoader(engine=None)
-    template_name = "{}{}".format(
-        loaders.EMAIL_TEMPLATE_PREFIX,
-        email_template.name
-    )
+    template_name = "{}{}".format(loaders.EMAIL_TEMPLATE_PREFIX, email_template.name)
     templates = loader.get_template_sources(template_name=template_name)
     assert len(list(templates)) == 1
 
@@ -61,9 +58,7 @@ def test_load_template_source_invalid():
     """Template does not exist"""
     loader = loaders.EmailTemplateLoader(engine=None)
     with pytest.raises(TemplateDoesNotExist):
-        loader.load_template_source(
-            "{}wrong".format(loaders.EMAIL_TEMPLATE_PREFIX)
-        )
+        loader.load_template_source("{}wrong".format(loaders.EMAIL_TEMPLATE_PREFIX))
 
 
 def test_load_template_source_not_found(email_template):
@@ -75,10 +70,7 @@ def test_load_template_source_not_found(email_template):
 
 def test_load_template_source(email_template):
     loader = loaders.EmailTemplateLoader(engine=None)
-    template_name = "{}{}".format(
-        loaders.EMAIL_TEMPLATE_PREFIX,
-        email_template.name
-    )
+    template_name = "{}{}".format(loaders.EMAIL_TEMPLATE_PREFIX, email_template.name)
     content, name = loader.load_template_source(template_name)
     assert content == email_template.html_content
     assert name == email_template.name

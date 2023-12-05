@@ -24,39 +24,33 @@ def test_model_to_dictionary(superuser, group, permission):
     )
 
     assert result == {
-        'username': superuser.username,
-        'first_name': '',
-        'last_name': '',
-        'is_active': True,
-        'is_superuser': True,
-        'is_staff': False,
-        'last_login': None,
-        'groups': [group.pk],
-        'user_permissions': [permission.pk],
-        'pk': superuser.pk,
-        'model': 'auth.user',
-        'password': '',
-        'email': superuser.email,
-        'date_joined': date_joined_serialized,
+        "username": superuser.username,
+        "first_name": "",
+        "last_name": "",
+        "is_active": True,
+        "is_superuser": True,
+        "is_staff": False,
+        "last_login": None,
+        "groups": [group.pk],
+        "user_permissions": [permission.pk],
+        "pk": superuser.pk,
+        "model": "auth.user",
+        "password": "",
+        "email": superuser.email,
+        "date_joined": date_joined_serialized,
     }
 
 
 def test_serialize_dict(user):
-    with patch('unicef_notification.utils.model_to_dictionary') as mock_serialize:
-        mock_serialize.return_value = {'exclamation': 'Hello, world!'}
+    with patch("unicef_notification.utils.model_to_dictionary") as mock_serialize:
+        mock_serialize.return_value = {"exclamation": "Hello, world!"}
         d = {
-            'i': 27,
-            's': 'Foo',
-            'user': user,
+            "i": 27,
+            "s": "Foo",
+            "user": user,
         }
         result = utils.serialize_dict(d)
-        assert result == {
-            'i': 27,
-            's': 'Foo',
-            'user': {
-                'exclamation': 'Hello, world!'
-            }
-        }
+        assert result == {"i": 27, "s": "Foo", "user": {"exclamation": "Hello, world!"}}
 
 
 def test_strip_text():
@@ -75,78 +69,66 @@ def test_get_template_content_neither():
     assert utils.get_template_content(None, None) == ""
 
 
-@patch('unicef_notification.models.mail')
+@patch("unicef_notification.models.mail")
 def test_send_notification(mock_mail, file_html):
     mock_mail.send.return_value = Email()
     recipients = ["test@example.com"]
-    with patch.object(Notification, 'save'):
-        utils.send_notification(
-            recipients,
-            content_filename=file_html
-        )
+    with patch.object(Notification, "save"):
+        utils.send_notification(recipients, content_filename=file_html)
     # we called send with all the proper args
     mock_mail.send.assert_called()
     call_kwargs = mock_mail.send.call_args[1]
-    assert settings.DEFAULT_FROM_EMAIL == call_kwargs['sender']
+    assert settings.DEFAULT_FROM_EMAIL == call_kwargs["sender"]
     assert recipients == call_kwargs["recipients"]
 
 
-@patch('unicef_notification.models.mail')
+@patch("unicef_notification.models.mail")
 def test_send_notification_from_address(mock_mail, file_html):
     mock_mail.send.return_value = Email()
     recipients = ["test@example.com"]
     from_address = "from@example.com"
-    with patch.object(Notification, 'save'):
+    with patch.object(Notification, "save"):
         utils.send_notification(
-            recipients,
-            from_address=from_address,
-            content_filename=file_html
+            recipients, from_address=from_address, content_filename=file_html
         )
     # we called send with all the proper args
     mock_mail.send.assert_called()
     call_kwargs = mock_mail.send.call_args[1]
-    assert from_address == call_kwargs['sender']
+    assert from_address == call_kwargs["sender"]
     assert recipients == call_kwargs["recipients"]
 
 
-@patch('unicef_notification.models.mail')
+@patch("unicef_notification.models.mail")
 def test_send_notification_recipients_str(mock_mail, file_html):
     mock_mail.send.return_value = Email()
     recipients = "test@example.com"
-    with patch.object(Notification, 'save'):
-        utils.send_notification(
-            recipients,
-            content_filename=file_html
-        )
+    with patch.object(Notification, "save"):
+        utils.send_notification(recipients, content_filename=file_html)
     # we called send with all the proper args
     mock_mail.send.assert_called()
     call_kwargs = mock_mail.send.call_args[1]
     assert [recipients] == call_kwargs["recipients"]
 
 
-@patch('unicef_notification.models.mail')
+@patch("unicef_notification.models.mail")
 def test_send_notification_with_template(mock_mail, email_template):
     mock_mail.send.return_value = Email()
     recipients = ["test@example.com"]
-    with patch.object(Notification, 'save'):
-        utils.send_notification_with_template(
-            recipients,
-            email_template.name,
-            {}
-        )
+    with patch.object(Notification, "save"):
+        utils.send_notification_with_template(recipients, email_template.name, {})
     # we called send with all the proper args
     mock_mail.send.assert_called()
     call_kwargs = mock_mail.send.call_args[1]
-    assert settings.DEFAULT_FROM_EMAIL == call_kwargs['sender']
+    assert settings.DEFAULT_FROM_EMAIL == call_kwargs["sender"]
     assert recipients == call_kwargs["recipients"]
 
 
-@patch('unicef_notification.models.mail')
+@patch("unicef_notification.models.mail")
 def test_send_notification_with_template_from_address(mock_mail, email_template):
     mock_mail.send.return_value = Email()
     recipients = ["test@example.com"]
     from_address = "from@example.com"
-    with patch.object(Notification, 'save'):
+    with patch.object(Notification, "save"):
         utils.send_notification_with_template(
             recipients,
             email_template.name,
@@ -156,15 +138,15 @@ def test_send_notification_with_template_from_address(mock_mail, email_template)
     # we called send with all the proper args
     mock_mail.send.assert_called()
     call_kwargs = mock_mail.send.call_args[1]
-    assert from_address == call_kwargs['sender']
+    assert from_address == call_kwargs["sender"]
     assert recipients == call_kwargs["recipients"]
 
 
-@patch('unicef_notification.models.mail')
+@patch("unicef_notification.models.mail")
 def test_send_notification_with_template_recipients_str(mock_mail, email_template):
     mock_mail.send.return_value = Email()
     recipients = "test@example.com"
-    with patch.object(Notification, 'save'):
+    with patch.object(Notification, "save"):
         utils.send_notification_with_template(
             recipients,
             email_template.name,

@@ -15,8 +15,7 @@ class JSONFieldFactory(factory.DictFactory):
     @classmethod
     def _build(cls, model_class, *args, **kwargs):
         if args:
-            raise ValueError(
-                "DictFactory %r does not support Meta.inline_args.", cls)
+            raise ValueError("DictFactory %r does not support Meta.inline_args.", cls)
         return json.dumps(model_class(**kwargs))
 
 
@@ -45,14 +44,14 @@ class AuthorFactory(factory.django.DjangoModelFactory):
 class NotificationFactory(factory.django.DjangoModelFactory):
     method_type = models.Notification.TYPE_EMAIL
     sender = factory.SubFactory(AuthorFactory)
-    recipients = ['test@example.com', 'test1@example.com', 'test2@example.com']
+    recipients = ["test@example.com", "test1@example.com", "test2@example.com"]
     template_data = factory.Dict(
         {
-            'url': 'www.unicef.org',
-            'pa_assistant': 'Test revised',
-            'owner_name': 'Tester revised'
+            "url": "www.unicef.org",
+            "pa_assistant": "Test revised",
+            "owner_name": "Tester revised",
         },
-        dict_factory=JSONFieldFactory
+        dict_factory=JSONFieldFactory,
     )
 
     class Meta:
