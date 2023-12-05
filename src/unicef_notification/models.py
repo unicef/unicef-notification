@@ -178,3 +178,6 @@ class Notification(models.Model):
             self.sent_recipients = self.recipients + self.cc
             self.sent_email = email
             self.save()
+
+    class Meta:
+        app_label = 'unicef_notification'
