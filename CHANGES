@@ -1,7 +1,7 @@
-Release 1.4
+Release 1.4 (in development)
 -----------
-* Added support to Django 5.0
-* Added support to python 3.12
+* added support to Django 5.0
+* added support to python 3.11, 3.12
 
 
 Release 1.3
