@@ -165,7 +165,7 @@ class Notification(models.Model):
                 recipients=self.recipients,
                 cc=self.cc,
                 sender=sender,
-                template=self.template_name,
+                template=self.template_name if self.template_name else None,
                 context=template_data,
                 subject=self.subject,  # actually template text
                 message=self.text_message,  # actually template text
